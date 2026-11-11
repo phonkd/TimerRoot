@@ -197,6 +197,19 @@ the leaked credential address, not the linear-map base.
 Shizuku is not running. Start it again (it stops on every reboot) and see
 step 1.
 
+If `start.sh` reports success but logcat shows an `UnsatisfiedLinkError` for
+`librish.so`, an old external starter may be launching a newer Shizuku server
+without the native-library path it expects. With the phone connected over
+authorized USB debugging, Linux and macOS users can run:
+
+```bash
+scripts/start-shizuku.sh
+```
+
+The helper starts the installed Shizuku server directly using its extracted
+ABI-specific library. It does not run TimerRoot or require root. Use the normal
+wireless-debugging route instead if it works on your device.
+
 ### `Prepare` reports nothing
 
 A system dialog may be covering the app (Shizuku pairing, OPPO installer scan).
@@ -223,6 +236,7 @@ app/src/main/java/com/kpgc/timerroot/UserService.java    runs as the shell user
 app/src/main/aidl/com/kpgc/timerroot/IUserService.aidl   service interface
 app/src/main/assets/timer                                exploit binary (not in git)
 scripts/build.ps1                                        Gradle-free build
+scripts/start-shizuku.sh                                 stale-starter workaround
 ```
 
 ## Credits
